@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static UIController instance;
 
-    // Update is called once per frame
-    void Update()
+    [HideInInspector]
+    public UIInGame uIInGame;
+
+    private void Awake()
     {
-        
+        instance = this;
+
+        uIInGame = GetComponent<UIInGame>();
     }
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AssaultRifleGun
+  m_Controller: {fileID: 9100000, guid: 1b6ad8cbe7f0508489b74e7d91c6d37c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 4388b89040ba80f4b8ab70a8322c2166, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 91b1bc2c66f58d94d864037466594061, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 87f6b03db62bc7244b49d79900424996, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 2dc6e7641e3a63741902d506a2e48877, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: c4dc1161e655c854e97852c2f3e107eb, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: b4db7c31e6782714f99d60479da71568, type: 3}

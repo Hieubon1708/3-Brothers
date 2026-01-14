@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ElectricGun
+  m_Controller: {fileID: 9100000, guid: 1b6ad8cbe7f0508489b74e7d91c6d37c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 4388b89040ba80f4b8ab70a8322c2166, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 33ae3cf2dc6031b45852ca702385fc11, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 87f6b03db62bc7244b49d79900424996, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: a2a274d43daf0d44e806120d2f7840c1, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: c4dc1161e655c854e97852c2f3e107eb, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: f0eb614d90161ab409351e0a70a9f049, type: 3}
