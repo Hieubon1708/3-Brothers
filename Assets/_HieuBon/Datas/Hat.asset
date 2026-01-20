@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf9aac77fe66bf4482f30743da038d2, type: 3}
   m_Name: Hat
   m_EditorClassIdentifier: 
+  names:
+  - Hero
+  - Ninja
+  - Samurai
+  - Knight
+  - Robot
   dataEquipUpgradeChildren:
   - texts:
     - +500 Health

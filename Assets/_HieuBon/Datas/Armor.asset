@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf9aac77fe66bf4482f30743da038d2, type: 3}
   m_Name: Armor
   m_EditorClassIdentifier: 
+  names:
+  - Hero
+  - Ninja
+  - Samurai
+  - Knight
+  - Robot
   dataEquipUpgradeChildren:
   - texts:
     - +500 Health
@@ -40,7 +46,7 @@ MonoBehaviour:
   - texts:
     - Grant a shield (30% Current HP) after 10s out of combat
     - +5% Dodge
-    - Restores 1% HP upon defeating an enemy
+    - Restores 1% Health upon defeating an enemy
     - 5% Damage Reflection
     - 5% Damage Reduction when below 30% HP
   - texts:

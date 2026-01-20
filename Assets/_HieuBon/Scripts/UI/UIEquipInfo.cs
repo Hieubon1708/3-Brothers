@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static GameController;
 
 public class UIEquipInfo : MonoBehaviour
 {
@@ -7,22 +8,57 @@ public class UIEquipInfo : MonoBehaviour
     public Color[] colors;
     public RectTransform[] barIndexes;
     public TextMeshProUGUI[] textIndexes;
+    public GameObject[] labels;
+    public GameObject[] locks;
 
-    public DataEquipUpgrade dataEquipUpgrade;
+    public DataEquipUpgrade[] dataEquipUpgrades;
 
     public RectTransform border;
 
-    private void Start()
+    UIEquip uIEquip;
+
+    public GameObject[] indexType;
+
+    public TextMeshProUGUI equipName;
+
+    public void Show(UIEquip uIEquip)
     {
-        LoadData();
+        if (this.uIEquip == null) this.uIEquip = GetComponentInChildren<UIEquip>(true);
+
+        LoadData(uIEquip);
+
+        gameObject.SetActive(true);
     }
 
-    public void LoadData()
+    public void LoadData(UIEquip uIEquip)
     {
+        indexType[0].SetActive(uIEquip.equipType == EquipType.Weapon);
+        indexType[1].SetActive(uIEquip.equipType != EquipType.Weapon);
+
+        int qualityIndex = (int)uIEquip.equipQuality;
+
+        for (int i = 0; i < labels.Length; i++)
+        {
+            labels[i].SetActive(i == qualityIndex);
+        }
+
+        for (int i = 0; i < locks.Length; i++)
+        {
+            locks[i].SetActive(i > qualityIndex);
+        }
+
+        DataEquipUpgrade dataEquipUpgrade = dataEquipUpgrades[(int)uIEquip.equipType - 1];
+
+        equipName.text = dataEquipUpgrade.names[(int)uIEquip.equipMaterial];
+
+        this.uIEquip.LoadEquip(uIEquip.equipType, uIEquip.equipQuality, uIEquip.equipMaterial);
+
         for (int i = 0; i < textIndexes.Length; i++)
         {
-            textIndexes[i].text = dataEquipUpgrade.dataEquipUpgradeChildren[i].texts[0];
-            textIndexes[i].color = colors[i];
+            textIndexes[i].text = dataEquipUpgrade.dataEquipUpgradeChildren[i].texts[(int)uIEquip.equipMaterial];
+
+            if (i > qualityIndex) textIndexes[i].color = lockColor;
+            else textIndexes[i].color = colors[i];
         }
 
         float totalSize = 0f;
