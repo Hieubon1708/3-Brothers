@@ -3,6 +3,8 @@ using static GameController;
 
 public class UIEquip : MonoBehaviour
 {
+    public bool isUseTypeIcon;
+
     public EquipType equipType;
     public EquipQuality equipQuality;
     public EquipMaterial equipMaterial;
@@ -14,7 +16,7 @@ public class UIEquip : MonoBehaviour
     public GameObject[] hatIcons;
     public GameObject[] armorIcons;
     public GameObject[] shoesIcons;
-   
+
     public void LoadEquip(EquipType equipType, EquipQuality equipQuality, EquipMaterial equipMaterial)
     {
         this.equipType = equipType;
@@ -29,14 +31,17 @@ public class UIEquip : MonoBehaviour
             frames[i].SetActive(i == frameIndex);
         }
 
-        for (int i = 0; i < iconFrames.Length; i++)
+        if (isUseTypeIcon)
         {
-            iconFrames[i].SetActive(i == frameIndex);
-        }
+            for (int i = 0; i < iconFrames.Length; i++)
+            {
+                iconFrames[i].SetActive(i == frameIndex);
+            }
 
-        for (int i = 0; i < icons.Length; i++)
-        {
-            icons[i].SetActive(i == (int)equipType - 1);
+            for (int i = 0; i < icons.Length; i++)
+            {
+                icons[i].SetActive(i == (int)equipType - 1);
+            }
         }
 
         for (int i = 0; i < weaponIcons.Length; i++)

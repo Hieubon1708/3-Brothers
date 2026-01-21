@@ -2,23 +2,26 @@ using UnityEngine;
 
 public class UIEquipSelect : MonoBehaviour
 {
-    UIEquip uIEquip;
-    UIButtonScale uIButtonScale;
+    [HideInInspector]
+    public UIEquip uIEquip;
 
     private void Awake()
     {
         uIEquip = GetComponent<UIEquip>();
-        uIButtonScale = GetComponentInChildren<UIButtonScale>();
-        uIButtonScale.onClick += OnClick;
     }
 
-    void OnClick()
+    private void Start()
     {
-        UIInventory.instance.Select(uIEquip);
+        uIEquip.LoadEquip(uIEquip.equipType, uIEquip.equipQuality, uIEquip.equipMaterial);
     }
 
-    private void OnDestroy()
+    public void OnClick()
     {
-        uIButtonScale.onClick -= OnClick;
+        UIInventory.instance.Select(this);
+    }
+
+    public void Deactive()
+    {
+        gameObject.SetActive(false);
     }
 }

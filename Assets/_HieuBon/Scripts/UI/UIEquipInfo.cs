@@ -21,13 +21,28 @@ public class UIEquipInfo : MonoBehaviour
 
     public TextMeshProUGUI equipName;
 
-    public void Show(UIEquip uIEquip)
+    Animation ani;
+
+    [HideInInspector]
+    public UIEquipSelect uIEquipSelect;
+
+    public void Show(UIEquipSelect uIEquipSelect)
     {
+        this.uIEquipSelect = uIEquipSelect;
+
+        UIEquip uIEquip = uIEquipSelect.uIEquip;
+
         if (this.uIEquip == null) this.uIEquip = GetComponentInChildren<UIEquip>(true);
+        if (ani == null) ani = GetComponent<Animation>();
 
         LoadData(uIEquip);
 
         gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
     public void LoadData(UIEquip uIEquip)
@@ -73,5 +88,12 @@ public class UIEquipInfo : MonoBehaviour
         }
 
         border.sizeDelta = new Vector2(border.sizeDelta.x, totalSize);
+    }
+
+    public void Equip()
+    {
+        UIEquipedController.instance.Equip(uIEquipSelect);
+
+        Hide();
     }
 }
