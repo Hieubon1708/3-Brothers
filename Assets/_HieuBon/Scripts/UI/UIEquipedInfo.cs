@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using static GameController;
 
-public class UIEquipInfo : MonoBehaviour
+public class UIEquipedInfo : MonoBehaviour
 {
     public Color lockColor;
     public Color[] colors;
@@ -24,15 +24,15 @@ public class UIEquipInfo : MonoBehaviour
     Animation ani;
 
     [HideInInspector]
-    public UIEquipSelect uIEquipSelect;
+    public UIEquipedSelect uIEquipedSelect;
 
     public RectTransform rectPopup;
 
-    public void Show(UIEquipSelect uIEquipSelect)
+    public void Show(UIEquipedSelect uIEquipedSelect)
     {
-        this.uIEquipSelect = uIEquipSelect;
+        this.uIEquipedSelect = uIEquipedSelect;
 
-        UIEquip uIEquip = uIEquipSelect.uIEquip;
+        UIEquip uIEquip = uIEquipedSelect.uIEquip;
 
         if (this.uIEquip == null) this.uIEquip = GetComponentInChildren<UIEquip>(true);
         if (ani == null) ani = GetComponent<Animation>();
@@ -89,13 +89,13 @@ public class UIEquipInfo : MonoBehaviour
             totalSize += y;
         }
 
-        rectPopup.sizeDelta = new Vector2(rectPopup.sizeDelta.x, 600 + totalSize);
+        rectPopup.sizeDelta = new Vector2(rectPopup.sizeDelta.x, 750 + totalSize);
         border.sizeDelta = new Vector2(border.sizeDelta.x, totalSize);
     }
 
     public void Equip()
     {
-        uIEquipSelect.Deactive();
+        //uIEquipedSelect.Deactive();
 
         UIEquipedController.instance.Equip(uIEquip.equipData);
 

@@ -6,6 +6,8 @@ public class UIController : MonoBehaviour
 {
     public static UIController instance;
 
+    public Camera uICamera;
+
     [HideInInspector]
     public UIInGame uIInGame;
 

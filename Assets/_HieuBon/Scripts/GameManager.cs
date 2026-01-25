@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -54,6 +56,50 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("ShoesLevel", value);
+        }
+    }
+
+    public int IronAmount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("IronAmount", 1);
+        }
+        set
+        {
+            PlayerPrefs.SetInt("IronAmount", value);
+        }
+    }
+
+    public int ClothAmount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("ClothAmount");
+        }
+        set
+        {
+            PlayerPrefs.SetInt("ClothAmount", value);
+        }
+    }
+
+    public List<EquipData> Equipments
+    {
+        get
+        {
+            string txt = PlayerPrefs.GetString("Equipments", string.Empty);
+
+            if (!string.IsNullOrEmpty(txt))
+            {
+                return JsonConvert.DeserializeObject<List<EquipData>>(txt);
+            }
+
+            return new List<EquipData>();
+        }
+        set
+        {
+            string txt = JsonConvert.SerializeObject(value);
+            PlayerPrefs.SetString("Equipments", txt);
         }
     }
 }

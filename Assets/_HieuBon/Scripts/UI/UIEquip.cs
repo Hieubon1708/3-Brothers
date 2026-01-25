@@ -5,10 +5,6 @@ public class UIEquip : MonoBehaviour
 {
     public bool isUseTypeIcon;
 
-    public EquipType equipType;
-    public EquipQuality equipQuality;
-    public EquipMaterial equipMaterial;
-
     public GameObject[] frames;
     public GameObject[] iconFrames;
     public GameObject[] icons;
@@ -17,14 +13,14 @@ public class UIEquip : MonoBehaviour
     public GameObject[] armorIcons;
     public GameObject[] shoesIcons;
 
-    public void LoadEquip(EquipType equipType, EquipQuality equipQuality, EquipMaterial equipMaterial)
-    {
-        this.equipType = equipType;
-        this.equipQuality = equipQuality;
-        this.equipMaterial = equipMaterial;
+    public EquipData equipData;
 
-        int iconIndex = (int)equipMaterial;
-        int frameIndex = (int)equipQuality;
+    public void LoadEquip(EquipData equipData)
+    {
+        this.equipData = equipData;
+
+        int iconIndex = (int)equipData.equipMaterial;
+        int frameIndex = (int)equipData.equipQuality;
 
         for (int i = 0; i < frames.Length; i++)
         {
@@ -40,25 +36,25 @@ public class UIEquip : MonoBehaviour
 
             for (int i = 0; i < icons.Length; i++)
             {
-                icons[i].SetActive(i == (int)equipType - 1);
+                icons[i].SetActive(i == (int)equipData.equipType - 1);
             }
         }
 
         for (int i = 0; i < weaponIcons.Length; i++)
         {
-            weaponIcons[i].SetActive(i == iconIndex && equipType == EquipType.Weapon);
+            weaponIcons[i].SetActive(i == iconIndex && equipData.equipType == EquipType.Weapon);
         }
         for (int i = 0; i < hatIcons.Length; i++)
         {
-            hatIcons[i].SetActive(i == iconIndex && equipType == EquipType.Hat);
+            hatIcons[i].SetActive(i == iconIndex && equipData.equipType == EquipType.Hat);
         }
         for (int i = 0; i < armorIcons.Length; i++)
         {
-            armorIcons[i].SetActive(i == iconIndex && equipType == EquipType.Armor);
+            armorIcons[i].SetActive(i == iconIndex && equipData.equipType == EquipType.Armor);
         }
         for (int i = 0; i < shoesIcons.Length; i++)
         {
-            shoesIcons[i].SetActive(i == iconIndex && equipType == EquipType.Shoes);
+            shoesIcons[i].SetActive(i == iconIndex && equipData.equipType == EquipType.Shoes);
         }
     }
 }

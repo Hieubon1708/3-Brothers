@@ -1,49 +1,25 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UIButtonScale : MonoBehaviour
+public class UIButtonScale : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     float originScale;
 
-    Transform equipSelect;
-
-    void Update()
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
-
-            if (hit.collider != null)
-            {
-                if (equipSelect == null) originScale = hit.collider.transform.localScale.x;
-
-                equipSelect = hit.collider.transform;
-                equipSelect.DOKill();
-                equipSelect.DOScale(originScale * 0.95f, 0.1f);
-            }
-        }
-
-        if (equipSelect != null)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
-
-            if (hit.collider != null)
-            {
-                if (equipSelect != hit.collider.transform) Release();
-            }
-            else Release();
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (equipSelect != null) Release();
-        }
+        originScale = transform.localScale.x;
     }
 
-    void Release()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        equipSelect.DOKill();
-        equipSelect.DOScale(originScale, 0.1f);
-        equipSelect = null;
+        transform.DOKill();
+        transform.DOScale(originScale * 0.95f, 0.15f).SetEase(Ease.Linear);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        transform.DOKill();
+        transform.DOScale(originScale, 0.15f).SetEase(Ease.Linear);
     }
 }

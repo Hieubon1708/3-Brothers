@@ -19,17 +19,24 @@ public class UIEquipController : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        equipDatas = GameManager.instance.Equipments;
+
+        LoadEquips();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            EquipType[] t = ((EquipType[])Enum.GetValues(typeof(EquipType)));
-            EquipQuality[] q = ((EquipQuality[])Enum.GetValues(typeof(EquipQuality)));
-            EquipMaterial[] m = ((EquipMaterial[])Enum.GetValues(typeof(EquipMaterial)));
+            EquipType[] t = (EquipType[])Enum.GetValues(typeof(EquipType));
+            EquipQuality[] q = (EquipQuality[])Enum.GetValues(typeof(EquipQuality));
+            EquipMaterial[] m = (EquipMaterial[])Enum.GetValues(typeof(EquipMaterial));
 
             EquipType rt = t[UnityEngine.Random.Range(1, t.Length)];
             EquipQuality rq = q[UnityEngine.Random.Range(0, q.Length)];
-            EquipMaterial rm = m[UnityEngine.Random.Range(0, m.Length)];
+            EquipMaterial rm = m[UnityEngine.Random.Range(0, rt == EquipType.Weapon ? m.Length - 1 : m.Length - 3)];
 
             EquipData equipData = new EquipData(rt, rq, rm);
 
@@ -38,6 +45,8 @@ public class UIEquipController : MonoBehaviour
             Debug.Log(rt + " " + rq + " " + rm);
 
             LoadEquips();
+
+            SaveEquips();
         }
     }
 
@@ -45,21 +54,34 @@ public class UIEquipController : MonoBehaviour
     {
         for (int i = 0; i < equipDatas.Count; i++)
         {
-            if (i == equips.Count)
+            if (equipDatas[i].isEquip)
             {
-                UIEquip uIEquip = Instantiate(preEquip, equipContainer).GetComponent<UIEquip>();
-
-                equips.Add(uIEquip);
+                UIEquipedController.instance.Equip(equipDatas[i]);
             }
+            else
+            {
+                if (i == equips.Count)
+                {
+                    UIEquip uIEquip = Instantiate(preEquip, equipContainer).GetComponent<UIEquip>();
 
-            equips[i].LoadEquip(equipDatas[i].equipType, equipDatas[i].equipQuality, equipDatas[i].equipMaterial);
+                    equips.Add(uIEquip);
+                }
+
+                equips[i].LoadEquip(equipDatas[i]);
+            }
         }
+    }
+
+    public void SaveEquips()
+    {
+        GameManager.instance.Equipments = equipDatas;
     }
 }
 
 [System.Serializable]
 public class EquipData
 {
+    public bool isEquip;
     public EquipType equipType;
     public EquipQuality equipQuality;
     public EquipMaterial equipMaterial;

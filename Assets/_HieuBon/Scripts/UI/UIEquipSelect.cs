@@ -10,11 +10,6 @@ public class UIEquipSelect : MonoBehaviour
         uIEquip = GetComponent<UIEquip>();
     }
 
-    private void Start()
-    {
-        uIEquip.LoadEquip(uIEquip.equipType, uIEquip.equipQuality, uIEquip.equipMaterial);
-    }
-
     public void OnClick()
     {
         UIInventory.instance.Select(this);

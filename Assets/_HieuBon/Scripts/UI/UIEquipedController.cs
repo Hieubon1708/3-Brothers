@@ -1,38 +1,35 @@
 using UnityEngine;
+using static GameController;
 
 public class UIEquipedController : MonoBehaviour
 {
     public static UIEquipedController instance;
 
     [HideInInspector]
-    public UIEquiped[] uIEquipeds;
+    public UIEquipedSelect[] uIEquipeds;
 
     private void Awake()
     {
         instance = this;
 
-        uIEquipeds = GetComponentsInChildren<UIEquiped>(true);
+        uIEquipeds = GetComponentsInChildren<UIEquipedSelect>(true);
     }
 
-    public void Equip(UIEquipSelect uIEquipSelect)
+    public void Equip(EquipData equipData)
     {
-        uIEquipSelect.Deactive();
-
-        UIEquip uIEquip = uIEquipSelect.uIEquip;
-
-        int index = (int)uIEquip.equipType - 1;
+        int index = (int)equipData.equipType - 1;
 
         int level = 1;
 
-        switch (uIEquip.equipType)
+        switch (equipData.equipType)
         {
-            case GameController.EquipType.Weapon: level = GameManager.instance.WeaponLevel; break;
-            case GameController.EquipType.Hat: level = GameManager.instance.WeaponLevel; break;
-            case GameController.EquipType.Armor: level = GameManager.instance.WeaponLevel; break;
-            case GameController.EquipType.Shoes: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Weapon: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Hat: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Armor: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Shoes: level = GameManager.instance.WeaponLevel; break;
         }
 
-        uIEquipeds[index].LoadData(uIEquip, level);
+        uIEquipeds[index].LoadData(equipData, level);
     }
 
     public void Unequip(UIEquipSelect uIEquipSelect)
