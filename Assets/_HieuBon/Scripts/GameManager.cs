@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("WeaponLevel", value);
 
-            UIEquipedController.instance.uIEquipeds[0].UpdateLevel(value);
+            UIEquipeTopController.instance.uIEquipeds[0].UpdateLevel(value);
         }
     }
 
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HatLevel", value);
 
-            UIEquipedController.instance.uIEquipeds[1].UpdateLevel(value);
+            UIEquipeTopController.instance.uIEquipeds[1].UpdateLevel(value);
         }
     }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("ArmorLevel", value);
 
-            UIEquipedController.instance.uIEquipeds[2].UpdateLevel(value);
+            UIEquipeTopController.instance.uIEquipeds[2].UpdateLevel(value);
         }
     }
 
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("ShoesLevel", value);
 
-            UIEquipedController.instance.uIEquipeds[3].UpdateLevel(value);
+            UIEquipeTopController.instance.uIEquipeds[3].UpdateLevel(value);
         }
     }
 

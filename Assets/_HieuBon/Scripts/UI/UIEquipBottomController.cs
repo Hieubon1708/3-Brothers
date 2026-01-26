@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static GameController;
 
-public class UIEquipController : MonoBehaviour
+public class UIEquipBottomController : MonoBehaviour
 {
-    public static UIEquipController instance;
+    public static UIEquipBottomController instance;
 
     public GameObject preEquip;
 
     public Transform equipContainer;
 
     List<UIEquip> equips = new List<UIEquip>();
-    public List<EquipData> equipDatas = new List<EquipData>();
+    List<EquipData> equipDatas = new List<EquipData>();
+
+    bool isSortByType;
+
+    public TextMeshProUGUI textSort;
 
     private void Awake()
     {
@@ -47,31 +52,23 @@ public class UIEquipController : MonoBehaviour
             LoadEquips();
             SaveEquips();
         }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            for (int i = 0; i < equipDatas.Count; i++)
-            {
-                equipDatas[i].isEquip = true;
-            }
-        }
     }
 
     public void LoadEquips()
     {
+        if (isSortByType) SortByType();
+        else SortByQuality();
+
         int count = 0;
 
-        //data
         for (int i = 0; i < equipDatas.Count; i++)
         {
-            Debug.Log(equipDatas[i].isEquip);
-
             if (equipDatas[i].isEquip)
             {
-                UIEquipedController.instance.Equip(equipDatas[i]);
+                UIEquipeTopController.instance.Equip(equipDatas[i]);
             }
             else
             {
-                //equips obj grid
                 if (count >= equips.Count)
                 {
                     UIEquip uIEquip = Instantiate(preEquip, equipContainer).GetComponent<UIEquip>();
@@ -84,11 +81,70 @@ public class UIEquipController : MonoBehaviour
                 count++;
             }
         }
+
+        for (int i = count; i < equips.Count; i++)
+        {
+            equips[i].gameObject.SetActive(false);
+        }
     }
 
     public void SaveEquips()
     {
         GameManager.instance.Equipments = equipDatas;
+    }
+
+    public void Sort()
+    {
+        textSort.text = "Sort By " + (isSortByType ? "Type" : "Quality");
+
+        isSortByType = !isSortByType;
+
+        LoadEquips();
+    }
+
+    public void SortByQuality()
+    {
+        for (int i = 0; i < equipDatas.Count - 1; i++)
+        {
+            for (int j = i + 1; j < equipDatas.Count; j++)
+            {
+                if (equipDatas[i].equipQuality < equipDatas[j].equipQuality)
+                {
+                    EquipData temp = equipDatas[i];
+                    equipDatas[i] = equipDatas[j];
+                    equipDatas[j] = temp;
+                }
+                else if (equipDatas[i].equipQuality == equipDatas[j].equipQuality
+                    && equipDatas[i].equipType > equipDatas[j].equipType)
+                {
+                    EquipData temp = equipDatas[i];
+                    equipDatas[i] = equipDatas[j];
+                    equipDatas[j] = temp;
+                }
+            }
+        }
+    }
+
+    public void SortByType()
+    {
+        for (int i = 0; i < equipDatas.Count - 1; i++)
+        {
+            for (int j = i + 1; j < equipDatas.Count; j++)
+            {
+                if (equipDatas[i].equipType > equipDatas[j].equipType)
+                {
+                    EquipData temp = equipDatas[i];
+                    equipDatas[i] = equipDatas[j];
+                    equipDatas[j] = temp;
+                }
+                else if (equipDatas[i].equipType == equipDatas[j].equipType && equipDatas[i].equipQuality < equipDatas[j].equipQuality)
+                {
+                    EquipData temp = equipDatas[i];
+                    equipDatas[i] = equipDatas[j];
+                    equipDatas[j] = temp;
+                }
+            }
+        }
     }
 }
 

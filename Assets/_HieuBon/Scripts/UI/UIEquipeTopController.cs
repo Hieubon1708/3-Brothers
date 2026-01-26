@@ -1,18 +1,18 @@
 using UnityEngine;
 using static GameController;
 
-public class UIEquipedController : MonoBehaviour
+public class UIEquipeTopController : MonoBehaviour
 {
-    public static UIEquipedController instance;
+    public static UIEquipeTopController instance;
 
     [HideInInspector]
-    public UIEquipedSelect[] uIEquipeds;
+    public UIEquipTop[] uIEquipeds;
 
     private void Awake()
     {
         instance = this;
 
-        uIEquipeds = GetComponentsInChildren<UIEquipedSelect>(true);
+        uIEquipeds = GetComponentsInChildren<UIEquipTop>(true);
     }
 
     public void Equip(EquipData equipData)
@@ -32,7 +32,7 @@ public class UIEquipedController : MonoBehaviour
         uIEquipeds[index].LoadData(equipData, level);
     }
 
-    public void Unequip(UIEquipSelect uIEquipSelect)
+    public void Unequip(UIEquipBottom uIEquipSelect)
     {
         UIEquip uIEquip = uIEquipSelect.uIEquip;
     }

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using static GameController;
 
-public class UIEquipInfo : MonoBehaviour
+public class UIPanelEquipBottom : MonoBehaviour
 {
     public Color lockColor;
     public Color[] colors;
@@ -24,20 +24,18 @@ public class UIEquipInfo : MonoBehaviour
     Animation ani;
 
     [HideInInspector]
-    public UIEquipSelect uIEquipSelect;
+    public UIEquipBottom uIEquipSelect;
 
     public RectTransform rectPopup;
 
-    public void Show(UIEquipSelect uIEquipSelect)
+    public void Show(UIEquipBottom uIEquipSelect)
     {
         this.uIEquipSelect = uIEquipSelect;
 
-        UIEquip uIEquip = uIEquipSelect.uIEquip;
-
-        if (this.uIEquip == null) this.uIEquip = GetComponentInChildren<UIEquip>(true);
+        if (uIEquip == null) uIEquip = GetComponentInChildren<UIEquip>(true);
         if (ani == null) ani = GetComponent<Animation>();
 
-        LoadData(uIEquip.equipData);
+        LoadData(this.uIEquipSelect.uIEquip.equipData);
 
         gameObject.SetActive(true);
     }
@@ -92,26 +90,18 @@ public class UIEquipInfo : MonoBehaviour
         rectPopup.sizeDelta = new Vector2(rectPopup.sizeDelta.x, 600 + totalSize);
         border.sizeDelta = new Vector2(border.sizeDelta.x, totalSize);
     }
-
+    
     public void Equip()
     {
         uIEquipSelect.uIEquip.equipData.isEquip = true;
+        
         uIEquipSelect.Deactive();
 
-        UIEquipedController.instance.Equip(uIEquip.equipData);
+        UIEquipeTopController.instance.Equip(uIEquip.equipData);
 
-        /*UIEquipController.instance.SaveEquips();
-        UIEquipController.instance.LoadEquips();*/
+        UIEquipBottomController.instance.SaveEquips();
+        UIEquipBottomController.instance.LoadEquips();
 
         Hide();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            uIEquipSelect.uIEquip.equipData.isEquip = true;
-            Debug.Log(uIEquipSelect.uIEquip.equipData.isEquip);
-        }
     }
 }

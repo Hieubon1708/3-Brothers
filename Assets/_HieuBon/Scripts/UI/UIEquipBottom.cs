@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIEquipSelect : MonoBehaviour
+public class UIEquipBottom : MonoBehaviour
 {
     //[HideInInspector]
     public UIEquip uIEquip;
@@ -19,4 +19,6 @@ public class UIEquipSelect : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+   
 }

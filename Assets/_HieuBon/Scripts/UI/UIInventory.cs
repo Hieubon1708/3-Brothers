@@ -5,9 +5,9 @@ public class UIInventory : MonoBehaviour
     public static UIInventory instance;
 
     [HideInInspector]
-    public UIEquipInfo uIEquipInfo;
+    public UIPanelEquipBottom uIEquipInfo;
     [HideInInspector]
-    public UIEquipedInfo uIEquipedInfo;
+    public UIPanelEquipTop uIEquipedInfo;
     [HideInInspector]
     public UIMaterial uIMaterial;
 
@@ -15,17 +15,17 @@ public class UIInventory : MonoBehaviour
     {
         instance = this;
 
-        uIEquipInfo = GetComponentInChildren<UIEquipInfo>(true);
-        uIEquipedInfo = GetComponentInChildren<UIEquipedInfo>(true);
+        uIEquipInfo = GetComponentInChildren<UIPanelEquipBottom>(true);
+        uIEquipedInfo = GetComponentInChildren<UIPanelEquipTop>(true);
         uIMaterial = GetComponentInChildren<UIMaterial>(true);
     }
 
-    public void Select(UIEquipSelect uIEquipSelect)
+    public void Select(UIEquipBottom uIEquipSelect)
     {
         uIEquipInfo.Show(uIEquipSelect);
     }
 
-    public void EquipedSelect(UIEquipedSelect uIEquipedSelect)
+    public void EquipedSelect(UIEquipTop uIEquipedSelect)
     {
         uIEquipedInfo.Show(uIEquipedSelect);
     }

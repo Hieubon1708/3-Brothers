@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static GameController;
 
-public class UIEquipedInfo : MonoBehaviour
+public class UIPanelEquipTop : MonoBehaviour
 {
     public Color lockColor;
     public Color[] colors;
@@ -23,11 +23,13 @@ public class UIEquipedInfo : MonoBehaviour
     public TextMeshProUGUI equipName;
     public TextMeshProUGUI textAmountMaterial;
     public TextMeshProUGUI textAmountGold;
+    public TextMeshProUGUI textLevel;
+    public TextMeshProUGUI textValue;
 
     Animation ani;
 
     [HideInInspector]
-    public UIEquipedSelect uIEquipedSelect;
+    public UIEquipTop uIEquipedSelect;
 
     public RectTransform rectPopup;
 
@@ -35,7 +37,7 @@ public class UIEquipedInfo : MonoBehaviour
     public GameObject[] btnsDisable;
     public Button[] btnsUpgrade;
 
-    public void Show(UIEquipedSelect uIEquipedSelect)
+    public void Show(UIEquipTop uIEquipedSelect)
     {
         this.uIEquipedSelect = uIEquipedSelect;
 
@@ -107,6 +109,12 @@ public class UIEquipedInfo : MonoBehaviour
 
     void UpdateIndex(EquipData equipData)
     {
+        int level = GetLevel(equipData);
+
+        int value = GetValue(level, equipData.equipType);
+
+        textValue.text = value.ToString();
+
         int gold = GameManager.instance.Gold;
         int goldUpgrade = GetGoldUpgrade();
 
@@ -119,13 +127,15 @@ public class UIEquipedInfo : MonoBehaviour
         textAmountGold.text = textGold;
         textAmountMaterial.text = textMaterial;
 
-        bool isUpgrade = gold >= goldUpgrade && amountMaterial >= amountUpgradeMaterial;
+        bool isUpgrade = gold >= goldUpgrade && amountMaterial >= amountUpgradeMaterial && level < 1000;
 
         for (int i = 0; i < btnsUpgrade.Length; i++)
         {
             btnsDisable[i].SetActive(!isUpgrade);
             btnsUpgrade[i].interactable = isUpgrade;
         }
+
+        textLevel.text = "Level: " + level + "/1000";
     }
 
     public void Upgrade()
@@ -138,7 +148,7 @@ public class UIEquipedInfo : MonoBehaviour
         int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
         int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
 
-        if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial) return;
+        if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || GetLevel(equipData) == 1000) return;
 
         GameManager.instance.Gold -= goldUpgrade;
 
@@ -158,15 +168,41 @@ public class UIEquipedInfo : MonoBehaviour
 
     public void UpgradeMax()
     {
+        EquipData equipData = uIEquipedSelect.equipData;
 
+        while (true)
+        {
+            int gold = GameManager.instance.Gold;
+            int goldUpgrade = GetGoldUpgrade();
+
+            int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
+            int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+
+            if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || GetLevel(equipData) == 1000) break;
+
+            GameManager.instance.Gold -= goldUpgrade;
+
+            switch (equipData.equipType)
+            {
+                case EquipType.Weapon: GameManager.instance.WeaponLevel++; break;
+                case EquipType.Hat: GameManager.instance.HatLevel++; break;
+                case EquipType.Armor: GameManager.instance.ArmorLevel++; break;
+                case EquipType.Shoes: GameManager.instance.ShoesLevel++; break;
+            }
+
+            if (equipData.equipType == EquipType.Weapon) GameManager.instance.IronAmount -= amountUpgradeMaterial;
+            else GameManager.instance.ClothAmount -= amountUpgradeMaterial;
+        }
+
+        UpdateIndex(equipData);
     }
 
     public void UnEquip()
     {
         uIEquip.equipData.isEquip = false;
 
-        UIEquipController.instance.SaveEquips();
-        UIEquipController.instance.LoadEquips();
+        UIEquipBottomController.instance.SaveEquips();
+        UIEquipBottomController.instance.LoadEquips();
 
         uIEquipedSelect.Deactive();
 
@@ -182,5 +218,25 @@ public class UIEquipedInfo : MonoBehaviour
     {
         if (equipType == EquipType.Weapon) return 10;
         else return 10;
+    }
+
+    int GetLevel(EquipData equipData)
+    {
+        int level = 1;
+
+        switch (equipData.equipType)
+        {
+            case EquipType.Weapon: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Hat: level = GameManager.instance.HatLevel; break;
+            case EquipType.Armor: level = GameManager.instance.ArmorLevel; break;
+            case EquipType.Shoes: level = GameManager.instance.ShoesLevel; break;
+        }
+
+        return level;
+    }
+
+    int GetValue(int level, EquipType equipType)
+    {
+        return 999;
     }
 }

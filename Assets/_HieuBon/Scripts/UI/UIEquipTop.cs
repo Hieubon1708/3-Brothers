@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UIEquipedSelect : MonoBehaviour
+public class UIEquipTop : MonoBehaviour
 {
     [HideInInspector]
     public UIEquip uIEquip;
@@ -14,7 +14,7 @@ public class UIEquipedSelect : MonoBehaviour
 
     public void LoadData(EquipData equipData, int level)
     {
-        if (this.equipData != null) this.equipData.isEquip = false;
+        if (this.equipData != null && this.equipData != equipData) this.equipData.isEquip = false;
 
         this.equipData = equipData;
 
