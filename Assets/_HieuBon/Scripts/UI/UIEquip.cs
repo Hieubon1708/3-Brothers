@@ -56,5 +56,7 @@ public class UIEquip : MonoBehaviour
         {
             shoesIcons[i].SetActive(i == iconIndex && equipData.equipType == EquipType.Shoes);
         }
+
+        gameObject.SetActive(true);
     }
 }

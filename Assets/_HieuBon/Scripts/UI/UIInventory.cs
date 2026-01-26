@@ -8,6 +8,8 @@ public class UIInventory : MonoBehaviour
     public UIEquipInfo uIEquipInfo;
     [HideInInspector]
     public UIEquipedInfo uIEquipedInfo;
+    [HideInInspector]
+    public UIMaterial uIMaterial;
 
     private void Awake()
     {
@@ -15,6 +17,7 @@ public class UIInventory : MonoBehaviour
 
         uIEquipInfo = GetComponentInChildren<UIEquipInfo>(true);
         uIEquipedInfo = GetComponentInChildren<UIEquipedInfo>(true);
+        uIMaterial = GetComponentInChildren<UIMaterial>(true);
     }
 
     public void Select(UIEquipSelect uIEquipSelect)

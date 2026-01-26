@@ -95,10 +95,23 @@ public class UIEquipInfo : MonoBehaviour
 
     public void Equip()
     {
+        uIEquipSelect.uIEquip.equipData.isEquip = true;
         uIEquipSelect.Deactive();
 
         UIEquipedController.instance.Equip(uIEquip.equipData);
 
+        /*UIEquipController.instance.SaveEquips();
+        UIEquipController.instance.LoadEquips();*/
+
         Hide();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            uIEquipSelect.uIEquip.equipData.isEquip = true;
+            Debug.Log(uIEquipSelect.uIEquip.equipData.isEquip);
+        }
     }
 }

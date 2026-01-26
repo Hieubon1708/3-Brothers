@@ -10,11 +10,14 @@ public class UIController : MonoBehaviour
 
     [HideInInspector]
     public UIInGame uIInGame;
+    [HideInInspector]
+    public UICurrency uICurrency;
 
     private void Awake()
     {
         instance = this;
 
         uIInGame = GetComponent<UIInGame>();
+        uICurrency = GetComponentInChildren<UICurrency>(true);
     }
 }

@@ -24,9 +24,9 @@ public class UIEquipedController : MonoBehaviour
         switch (equipData.equipType)
         {
             case EquipType.Weapon: level = GameManager.instance.WeaponLevel; break;
-            case EquipType.Hat: level = GameManager.instance.WeaponLevel; break;
-            case EquipType.Armor: level = GameManager.instance.WeaponLevel; break;
-            case EquipType.Shoes: level = GameManager.instance.WeaponLevel; break;
+            case EquipType.Hat: level = GameManager.instance.HatLevel; break;
+            case EquipType.Armor: level = GameManager.instance.ArmorLevel; break;
+            case EquipType.Shoes: level = GameManager.instance.ShoesLevel; break;
         }
 
         uIEquipeds[index].LoadData(equipData, level);

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIEquipSelect : MonoBehaviour
 {
-    [HideInInspector]
+    //[HideInInspector]
     public UIEquip uIEquip;
 
     private void Awake()

@@ -12,7 +12,7 @@ public class UIEquipController : MonoBehaviour
     public Transform equipContainer;
 
     List<UIEquip> equips = new List<UIEquip>();
-    List<EquipData> equipDatas = new List<EquipData>();
+    public List<EquipData> equipDatas = new List<EquipData>();
 
     private void Awake()
     {
@@ -45,29 +45,43 @@ public class UIEquipController : MonoBehaviour
             Debug.Log(rt + " " + rq + " " + rm);
 
             LoadEquips();
-
             SaveEquips();
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            for (int i = 0; i < equipDatas.Count; i++)
+            {
+                equipDatas[i].isEquip = true;
+            }
         }
     }
 
-    void LoadEquips()
+    public void LoadEquips()
     {
+        int count = 0;
+
+        //data
         for (int i = 0; i < equipDatas.Count; i++)
         {
+            Debug.Log(equipDatas[i].isEquip);
+
             if (equipDatas[i].isEquip)
             {
                 UIEquipedController.instance.Equip(equipDatas[i]);
             }
             else
             {
-                if (i == equips.Count)
+                //equips obj grid
+                if (count >= equips.Count)
                 {
                     UIEquip uIEquip = Instantiate(preEquip, equipContainer).GetComponent<UIEquip>();
 
                     equips.Add(uIEquip);
                 }
 
-                equips[i].LoadEquip(equipDatas[i]);
+                equips[count].LoadEquip(equipDatas[i]);
+
+                count++;
             }
         }
     }

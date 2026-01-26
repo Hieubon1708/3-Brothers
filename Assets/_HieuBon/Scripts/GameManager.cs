@@ -11,6 +11,20 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    public int Gold
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("Gold", 100);
+        }
+        set
+        {
+            PlayerPrefs.SetInt("Gold", value);
+
+            //UIController.instance.uICurrency.UpdateGold();
+        }
+    }
+
     public int WeaponLevel
     {
         get
@@ -20,6 +34,8 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("WeaponLevel", value);
+
+            UIEquipedController.instance.uIEquipeds[0].UpdateLevel(value);
         }
     }
 
@@ -32,6 +48,8 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("HatLevel", value);
+
+            UIEquipedController.instance.uIEquipeds[1].UpdateLevel(value);
         }
     }
 
@@ -44,6 +62,8 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("ArmorLevel", value);
+
+            UIEquipedController.instance.uIEquipeds[2].UpdateLevel(value);
         }
     }
 
@@ -56,6 +76,8 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("ShoesLevel", value);
+
+            UIEquipedController.instance.uIEquipeds[3].UpdateLevel(value);
         }
     }
 
@@ -63,11 +85,13 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt("IronAmount", 1);
+            return PlayerPrefs.GetInt("IronAmount", 100);
         }
         set
         {
             PlayerPrefs.SetInt("IronAmount", value);
+
+            UIInventory.instance.uIMaterial.LoadData();
         }
     }
 
@@ -80,6 +104,8 @@ public class GameManager : MonoBehaviour
         set
         {
             PlayerPrefs.SetInt("ClothAmount", value);
+
+            UIInventory.instance.uIMaterial.LoadData();
         }
     }
 

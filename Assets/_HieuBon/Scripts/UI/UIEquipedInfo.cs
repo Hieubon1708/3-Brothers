@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static GameController;
 
 public class UIEquipedInfo : MonoBehaviour
@@ -20,6 +21,8 @@ public class UIEquipedInfo : MonoBehaviour
     public GameObject[] indexType;
 
     public TextMeshProUGUI equipName;
+    public TextMeshProUGUI textAmountMaterial;
+    public TextMeshProUGUI textAmountGold;
 
     Animation ani;
 
@@ -27,6 +30,10 @@ public class UIEquipedInfo : MonoBehaviour
     public UIEquipedSelect uIEquipedSelect;
 
     public RectTransform rectPopup;
+
+    public GameObject[] mats;
+    public GameObject[] btnsDisable;
+    public Button[] btnsUpgrade;
 
     public void Show(UIEquipedSelect uIEquipedSelect)
     {
@@ -52,7 +59,12 @@ public class UIEquipedInfo : MonoBehaviour
         indexType[0].SetActive(equipData.equipType == EquipType.Weapon);
         indexType[1].SetActive(equipData.equipType != EquipType.Weapon);
 
+        mats[0].SetActive(equipData.equipType == EquipType.Weapon);
+        mats[1].SetActive(equipData.equipType != EquipType.Weapon);
+
         int qualityIndex = (int)equipData.equipQuality;
+
+        UpdateIndex(equipData);
 
         for (int i = 0; i < labels.Length; i++)
         {
@@ -93,12 +105,82 @@ public class UIEquipedInfo : MonoBehaviour
         border.sizeDelta = new Vector2(border.sizeDelta.x, totalSize);
     }
 
-    public void Equip()
+    void UpdateIndex(EquipData equipData)
     {
-        //uIEquipedSelect.Deactive();
+        int gold = GameManager.instance.Gold;
+        int goldUpgrade = GetGoldUpgrade();
 
-        UIEquipedController.instance.Equip(uIEquip.equipData);
+        int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
+        int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+
+        string textGold = "<color=" + (gold < goldUpgrade ? "red" : "white") + ">" + gold + "</color>/" + goldUpgrade;
+        string textMaterial = "<color=" + (amountMaterial < amountUpgradeMaterial ? "red" : "white") + ">" + amountMaterial + "</color>/" + amountUpgradeMaterial;
+
+        textAmountGold.text = textGold;
+        textAmountMaterial.text = textMaterial;
+
+        bool isUpgrade = gold >= goldUpgrade && amountMaterial >= amountUpgradeMaterial;
+
+        for (int i = 0; i < btnsUpgrade.Length; i++)
+        {
+            btnsDisable[i].SetActive(!isUpgrade);
+            btnsUpgrade[i].interactable = isUpgrade;
+        }
+    }
+
+    public void Upgrade()
+    {
+        EquipData equipData = uIEquipedSelect.equipData;
+
+        int gold = GameManager.instance.Gold;
+        int goldUpgrade = GetGoldUpgrade();
+
+        int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
+        int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+
+        if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial) return;
+
+        GameManager.instance.Gold -= goldUpgrade;
+
+        switch (equipData.equipType)
+        {
+            case EquipType.Weapon: GameManager.instance.WeaponLevel++; break;
+            case EquipType.Hat: GameManager.instance.HatLevel++; break;
+            case EquipType.Armor: GameManager.instance.ArmorLevel++; break;
+            case EquipType.Shoes: GameManager.instance.ShoesLevel++; break;
+        }
+
+        if (equipData.equipType == EquipType.Weapon) GameManager.instance.IronAmount -= amountUpgradeMaterial;
+        else GameManager.instance.ClothAmount -= amountUpgradeMaterial;
+
+        UpdateIndex(equipData);
+    }
+
+    public void UpgradeMax()
+    {
+
+    }
+
+    public void UnEquip()
+    {
+        uIEquip.equipData.isEquip = false;
+
+        UIEquipController.instance.SaveEquips();
+        UIEquipController.instance.LoadEquips();
+
+        uIEquipedSelect.Deactive();
 
         Hide();
+    }
+
+    int GetGoldUpgrade()
+    {
+        return 10;
+    }
+
+    int GetAmountMaterialUpgrade(EquipType equipType)
+    {
+        if (equipType == EquipType.Weapon) return 10;
+        else return 10;
     }
 }
