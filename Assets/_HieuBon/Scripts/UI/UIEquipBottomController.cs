@@ -13,7 +13,8 @@ public class UIEquipBottomController : MonoBehaviour
     public Transform equipContainer;
 
     List<UIEquip> equips = new List<UIEquip>();
-    List<EquipData> equipDatas = new List<EquipData>();
+    [HideInInspector]
+    public List<EquipData> equipDatas = new List<EquipData>();
 
     bool isSortByType;
 
@@ -51,6 +52,10 @@ public class UIEquipBottomController : MonoBehaviour
 
             LoadEquips();
             SaveEquips();
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            UIMergeController.instance.LoadData();
         }
     }
 
