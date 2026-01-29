@@ -1,16 +1,20 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIMergeController : MonoBehaviour
 {
     public static UIMergeController instance;
 
-    List<UIEquip> equips = new List<UIEquip>();
+    [HideInInspector]
+    public List<UIEquip> equips = new List<UIEquip>();
 
     public GameObject preEquip;
 
     public Transform equipContainer;
+
+    List<EquipData> mergeEquips;
 
     private void Awake()
     {
@@ -20,7 +24,7 @@ public class UIMergeController : MonoBehaviour
     public void LoadData()
     {
         List<EquipData> equipDatas = new List<EquipData>(UIEquipBottomController.instance.equipDatas);
-        List<EquipData> mergeEquips = new List<EquipData>();
+        mergeEquips = new List<EquipData>();
 
         for (int i = 0; i < equipDatas.Count;)
         {
@@ -117,5 +121,10 @@ public class UIMergeController : MonoBehaviour
         return equipData1.equipType == equipData2.equipType
                 && equipData1.equipQuality == equipData2.equipQuality
                 && equipData1.equipMaterial == equipData2.equipMaterial;
+    }
+
+    public void QuickMerge()
+    {
+
     }
 }
