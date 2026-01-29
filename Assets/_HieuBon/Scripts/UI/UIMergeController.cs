@@ -16,9 +16,82 @@ public class UIMergeController : MonoBehaviour
 
     List<EquipData> mergeEquips;
 
+    public UIButtonMerge uIButtonMerge;
+
+    public UIMergeSlot[] uIMergeSlots;
+
+    public enum SlotType
+    {
+        Bottom, Left, Right, Top
+    }
+
     private void Awake()
     {
         instance = this;
+    }
+
+    public void HideAll()
+    {
+        for (int i = 0; i < uIMergeSlots.Length; i++)
+        {
+            uIMergeSlots[i].Hide();
+        }
+
+        uIButtonMerge.Check(mergeEquips.Count, 0);
+    }
+
+    public void Hide()
+    {
+        uIButtonMerge.Check(mergeEquips.Count, SelectCount());
+    }
+
+    public void AddSlot(UIEquipMerge uIEquipMerge)
+    {
+        for (int i = 0; i < uIMergeSlots.Length - 1; i++)
+        {
+            if (uIMergeSlots[i].isEmpty)
+            {
+                if (i == 0)
+                {
+                    for (int j = 0; j < uIMergeSlots.Length; j++)
+                    {
+                        uIMergeSlots[j].LoadData(uIEquipMerge);
+                    }
+
+                    uIEquipMerge.Deactive();
+
+                    break;
+                }
+
+                EquipData equipData1 = uIMergeSlots[0].uIEquipMerge.uIEquip.equipData;
+                EquipData equipData2 = uIEquipMerge.uIEquip.equipData;
+
+                if (equipData1.equipType == equipData2.equipType
+                && equipData1.equipQuality == equipData2.equipQuality
+                && equipData1.equipMaterial == equipData2.equipMaterial)
+                {
+                    uIMergeSlots[i].Show(uIEquipMerge);
+
+                    uIEquipMerge.Deactive();
+
+                    break;
+                }
+            }
+        }
+
+        uIButtonMerge.Check(mergeEquips.Count, SelectCount());
+    }
+
+    int SelectCount()
+    {
+        int selectCount = 0;
+
+        for (int i = 0; i < uIMergeSlots.Length - 1; i++)
+        {
+            if (!uIMergeSlots[i].isEmpty) selectCount++;
+        }
+
+        return selectCount;
     }
 
     public void LoadData()
@@ -42,6 +115,8 @@ public class UIMergeController : MonoBehaviour
                 equipDatas.Remove(checkCount[j]);
             }
         }
+
+        uIButtonMerge.Check(mergeEquips.Count, 0);
 
         equipDatas = UIEquipBottomController.instance.equipDatas;
 
@@ -121,10 +196,5 @@ public class UIMergeController : MonoBehaviour
         return equipData1.equipType == equipData2.equipType
                 && equipData1.equipQuality == equipData2.equipQuality
                 && equipData1.equipMaterial == equipData2.equipMaterial;
-    }
-
-    public void QuickMerge()
-    {
-
     }
 }

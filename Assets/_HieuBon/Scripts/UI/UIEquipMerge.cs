@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIEquipBottom : MonoBehaviour
+public class UIEquipMerge : MonoBehaviour
 {
     [HideInInspector]
     public UIEquip uIEquip;
@@ -12,11 +12,16 @@ public class UIEquipBottom : MonoBehaviour
 
     public void OnClick()
     {
-        UIInventory.instance.Select(this);
+        UIMergeController.instance.AddSlot(this);
     }
 
     public void Deactive()
     {
         gameObject.SetActive(false);
+    }
+
+    public void Active()
+    {
+        gameObject.SetActive(true);
     }
 }

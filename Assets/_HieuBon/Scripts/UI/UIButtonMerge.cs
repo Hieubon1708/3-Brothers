@@ -1,16 +1,21 @@
+using TMPro;
 using UnityEngine;
 
 public class UIButtonMerge : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject disabled;
+
+    TextMeshProUGUI text;
+
+    private void Awake()
     {
-        
+        text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Check(int count, int selectCount)
     {
-        
+        text.text = selectCount > 0 ? "Confirm" : "Quick Merge";
+
+        disabled.SetActive(!(count > 0 && selectCount == 0 || selectCount == 3));
     }
 }

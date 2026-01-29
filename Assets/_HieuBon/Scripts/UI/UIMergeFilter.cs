@@ -25,6 +25,13 @@ public class UIMergeFilter : MonoBehaviour
 
     public void Filter(int index)
     {
+        if (!UIMergeController.instance.uIMergeSlots[0].isEmpty)
+        {
+            OnClick();
+
+            return;
+        }
+
         isShowing = false;
 
         ChangeIconFilter(index);

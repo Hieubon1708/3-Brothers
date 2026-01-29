@@ -875,11 +875,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3928391169579995201}
   - component: {fileID: 4723725961847470341}
-  - component: {fileID: 5445141078019258101}
+  - component: {fileID: 2174171647171303921}
   - component: {fileID: 7293062798590317660}
   - component: {fileID: 7262099325306744390}
   m_Layer: 5
-  m_Name: Equip
+  m_Name: EquipMerge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fc83d02ec9a1345b676eda9f90c663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIEquip
-  isUseTypeIcon: 0
+  isUseTypeIcon: 1
   frames:
   - {fileID: 7821679472912348073}
   - {fileID: 8139810652596272141}
@@ -970,7 +970,7 @@ MonoBehaviour:
     equipType: 0
     equipQuality: 0
     equipMaterial: 0
---- !u!114 &5445141078019258101
+--- !u!114 &2174171647171303921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3061397001049199804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75058891ea8d2fd45b995dc0f16edad6, type: 3}
+  m_Script: {fileID: 11500000, guid: d0114295c2a473a43ac207fef4696722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uIEquip: {fileID: 0}
@@ -1027,8 +1027,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5445141078019258101}
-        m_TargetAssemblyTypeName: UIEquipSelect, Assembly-CSharp
+      - m_Target: {fileID: 2174171647171303921}
+        m_TargetAssemblyTypeName: UIEquipMerge, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
