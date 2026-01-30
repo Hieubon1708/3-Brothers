@@ -82,7 +82,7 @@ public class UIMergeController : MonoBehaviour
         uIButtonMerge.Check(mergeEquips.Count, SelectCount());
     }
 
-    int SelectCount()
+    public int SelectCount()
     {
         int selectCount = 0;
 
@@ -191,7 +191,7 @@ public class UIMergeController : MonoBehaviour
         }
     }
 
-    bool IsSame(EquipData equipData1, EquipData equipData2)
+    public bool IsSame(EquipData equipData1, EquipData equipData2)
     {
         return equipData1.equipType == equipData2.equipType
                 && equipData1.equipQuality == equipData2.equipQuality
