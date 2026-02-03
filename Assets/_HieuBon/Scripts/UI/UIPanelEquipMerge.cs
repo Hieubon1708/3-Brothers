@@ -23,19 +23,11 @@ public class UIPanelEquipMerge : MonoBehaviour
 
     Animation ani;
 
-    [HideInInspector]
-    public UIEquipBottom uIEquipSelect;
-
     public RectTransform rectPopup;
 
-    public void Show(UIEquipBottom uIEquipSelect)
+    public void Show()
     {
-        this.uIEquipSelect = uIEquipSelect;
-
-        if (uIEquip == null) uIEquip = GetComponentInChildren<UIEquip>(true);
         if (ani == null) ani = GetComponent<Animation>();
-
-        LoadData(this.uIEquipSelect.uIEquip.equipData);
 
         gameObject.SetActive(true);
     }
@@ -47,6 +39,8 @@ public class UIPanelEquipMerge : MonoBehaviour
 
     public void LoadData(EquipData equipData)
     {
+        if (uIEquip == null) uIEquip = GetComponentInChildren<UIEquip>(true);
+
         indexType[0].SetActive(equipData.equipType == EquipType.Weapon);
         indexType[1].SetActive(equipData.equipType != EquipType.Weapon);
 

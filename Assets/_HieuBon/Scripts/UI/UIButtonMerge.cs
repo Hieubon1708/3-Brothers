@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,9 +22,30 @@ public class UIButtonMerge : MonoBehaviour
 
     public void Merge()
     {
-        if (UIMergeController.instance.SelectCount() != 3) return;
+        int selectCount = UIMergeController.instance.SelectCount();
 
-        EquipData equipData = UIMergeController.instance.uIMergeSlots[0].uIEquipMerge.uIEquip.equipData;
+        List<EquipData> mergeEquipDatas = UIMergeController.instance.mergeEquips;
+
+        if (mergeEquipDatas.Count > 0 && selectCount == 0)
+        {
+            for (int j = 0; j < mergeEquipDatas.Count; j++)
+            {
+                HandleMerge(mergeEquipDatas[j]);
+            }
+
+            UIMergeController.instance.LoadData();
+        }
+        else if (selectCount == 3)
+        {
+            HandleMerge(UIMergeController.instance.uIMergeSlots[0].uIEquipMerge.uIEquip.equipData);
+
+            UIMergeController.instance.HideAll();
+            UIMergeController.instance.LoadData();
+        }
+    }
+
+    void HandleMerge(EquipData equipData)
+    {
         EquipData upgradeEquip = new EquipData(equipData.equipType, equipData.equipQuality + 1, equipData.equipMaterial);
 
         List<EquipData> equipDatas = UIEquipBottomController.instance.equipDatas;
@@ -45,8 +65,5 @@ public class UIButtonMerge : MonoBehaviour
                 if (count == 0) break;
             }
         }
-
-        UIMergeController.instance.HideAll();
-        UIMergeController.instance.LoadData();
     }
 }

@@ -15,6 +15,7 @@ public class UIEquipBottomController : MonoBehaviour
     List<UIEquip> equips = new List<UIEquip>();
     [HideInInspector]
     public List<EquipData> equipDatas = new List<EquipData>();
+    List<UIEquipBottom> equipsBottom = new List<UIEquipBottom>();
 
     bool isSortByType;
 
@@ -44,7 +45,7 @@ public class UIEquipBottomController : MonoBehaviour
             EquipQuality rq = q[UnityEngine.Random.Range(0, q.Length)];
             EquipMaterial rm = m[UnityEngine.Random.Range(0, rt == EquipType.Weapon ? m.Length - 1 : m.Length - 3)];
 
-            //EquipData equipData = new EquipData(EquipType.Weapon, EquipQuality.Q1, EquipMaterial.M1);
+            // EquipData equipData = new EquipData(EquipType.Weapon, EquipQuality.Q1, EquipMaterial.M1);
             EquipData equipData = new EquipData(rt, rq, rm);
 
             equipDatas.Add(equipData);
@@ -77,12 +78,16 @@ public class UIEquipBottomController : MonoBehaviour
             {
                 if (count >= equips.Count)
                 {
-                    UIEquip uIEquip = Instantiate(preEquip, equipContainer).GetComponent<UIEquip>();
+                    GameObject e = Instantiate(preEquip, equipContainer);
+                    UIEquip uIEquip = e.GetComponent<UIEquip>();
+                    UIEquipBottom uIEquipBottom = e.GetComponent<UIEquipBottom>();
 
                     equips.Add(uIEquip);
+                    equipsBottom.Add(uIEquipBottom);
                 }
 
                 equips[count].LoadEquip(equipDatas[i]);
+                equipsBottom[count].uIEquipAlert.IsNew(equipDatas[i]);
 
                 count++;
             }
@@ -92,6 +97,8 @@ public class UIEquipBottomController : MonoBehaviour
         {
             equips[i].gameObject.SetActive(false);
         }
+
+        UIEquipeTopController.instance.IsAnyUpgrade();
     }
 
     public void SaveEquips()
@@ -158,6 +165,8 @@ public class UIEquipBottomController : MonoBehaviour
 public class EquipData
 {
     public bool isEquip;
+    public bool isNew = true;
+
     public EquipType equipType;
     public EquipQuality equipQuality;
     public EquipMaterial equipMaterial;
