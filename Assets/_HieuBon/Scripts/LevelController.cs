@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static LevelController instance;
+
+    public float enemyVision = 3f;
+
+    Enemy[] enemies;
+
+    private void Awake()
     {
-        
+        instance = this;
+
+        enemies = GetComponentsInChildren<Enemy>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public Enemy GetEnemy(GameObject e)
     {
-        
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemies[i].gameObject == e) return enemies[i];
+        }
+        return null;
     }
 }

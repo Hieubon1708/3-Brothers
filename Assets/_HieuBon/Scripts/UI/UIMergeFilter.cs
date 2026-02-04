@@ -18,21 +18,20 @@ public class UIMergeFilter : MonoBehaviour
 
     public void OnClick()
     {
-        if (!UIMergeController.instance.uIMergeSlots[0].isEmpty) return;
-
         isShowing = !isShowing;
 
         dropdownMenu.SetActive(isShowing);
     }
 
-    public void Hide()
-    {
-        isShowing = false;
-        dropdownMenu.SetActive(isShowing);
-    }
-
     public void Filter(int index)
     {
+        if (!UIMergeController.instance.uIMergeSlots[0].isEmpty)
+        {
+            OnClick();
+
+            return;
+        }
+
         isShowing = false;
 
         ChangeIconFilter(index);

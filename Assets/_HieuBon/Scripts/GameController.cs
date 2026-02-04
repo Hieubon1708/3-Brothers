@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
 
     public enum WeaponType
     {
-        None, AssaultRifleGun, BazookaGun, ChemicalGun, ElectricGun, FlameThrowerGun, IceGun, SMGGun
+        Knife, AssaultRifleGun, BazookaGun, ChemicalGun, ElectricGun, FlameThrowerGun, IceGun, SMGGun
     }
 
     public enum GameState

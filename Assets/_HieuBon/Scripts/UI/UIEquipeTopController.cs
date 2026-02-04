@@ -36,22 +36,4 @@ public class UIEquipeTopController : MonoBehaviour
     {
         UIEquip uIEquip = uIEquipSelect.uIEquip;
     }
-
-    public bool IsEquiped(EquipType equipType)
-    {
-        return uIEquipeds[(int)equipType - 1].gameObject.activeSelf;
-    }
-
-    public bool IsGreaterQuality(EquipType equipType, EquipQuality equipQuality)
-    {
-        return uIEquipeds[(int)equipType - 1].uIEquip.equipData.equipQuality < equipQuality;
-    }
-
-    public void IsAnyUpgrade()
-    {
-        for (int i = 0; i < uIEquipeds.Length; i++)
-        {
-            uIEquipeds[i].CanUpgrade();
-        }
-    }
 }

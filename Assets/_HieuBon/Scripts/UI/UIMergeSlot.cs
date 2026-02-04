@@ -30,8 +30,6 @@ public class UIMergeSlot : MonoBehaviour
             EquipData upgradeEquip = new EquipData(equipData.equipType, equipData.equipQuality + 1, equipData.equipMaterial);
 
             uIEquip.LoadEquip(upgradeEquip);
-
-            UIMergeController.instance.uIPanelEquipMerge.LoadData(upgradeEquip);
         }
         else if (slotType == UIMergeController.SlotType.Bottom)
         {
@@ -70,9 +68,8 @@ public class UIMergeSlot : MonoBehaviour
 
     public void OnClick()
     {
-        if (slotType == UIMergeController.SlotType.Top && !UIMergeController.instance.uIMergeSlots[0].isEmpty)
+        if (slotType == UIMergeController.SlotType.Top)
         {
-            UIMergeController.instance.uIPanelEquipMerge.Show();
         }
         else
         {
