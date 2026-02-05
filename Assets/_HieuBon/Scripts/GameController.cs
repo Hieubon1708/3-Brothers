@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController instance;
+
+    public EnemyData enemyData;
+
+    public float enemyVision = 3f;
+
+    public enum EnemyType
+    {
+        E1, E2, E3, E4, E5
+    }
+
     public enum EquipQuality
     {
         Q1, Q2, Q3, Q4, Q5, Q6
@@ -26,6 +37,20 @@ public class GameController : MonoBehaviour
 
     public enum GameState
     {
-        Pause, Playing
+        Playing, Pause
+    }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public EnemyIndexData GetEnemyIndexData(EnemyType type)
+    {
+        for (int i = 0; i < enemyData.enemyIndexDatas.Length; i++)
+        {
+            if (enemyData.enemyIndexDatas[i].type == type) return enemyData.enemyIndexDatas[i];
+        }
+        return null;
     }
 }

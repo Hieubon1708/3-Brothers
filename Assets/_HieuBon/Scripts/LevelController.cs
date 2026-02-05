@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameController;
 
 public class LevelController : MonoBehaviour
 {
     public static LevelController instance;
 
-    public float enemyVision = 3f;
-
     Enemy[] enemies;
+
+    public GameState gameState;
 
     private void Awake()
     {

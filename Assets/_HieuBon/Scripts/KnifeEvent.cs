@@ -15,7 +15,7 @@ public class KnifeEvent : MonoBehaviour
 
             Enemy enemy = LevelController.instance.GetEnemy(e);
 
-            if (enemy != null) enemy.SubtractHealth(10);
+            if (enemy != null) enemy.SubtractHealth(70);
         }
     }
 }

@@ -1,36 +1,47 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.HID;
+using static GameController;
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyType type;
+
     NavMeshAgent navMeshAgent;
 
     Animator animator;
 
-    public int hp = 100;
-    public float speed;
-    public float attackRange;
-
     bool isPlayerDetected;
     bool isAttack;
+
+    [HideInInspector]
+    public EnemyIndexData enemyIndexData;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
         navMeshAgent.angularSpeed = 0;
         navMeshAgent.acceleration = 15;
     }
 
+    private void Start()
+    {
+        enemyIndexData = new EnemyIndexData(GameController.instance.GetEnemyIndexData(type));
+
+        navMeshAgent.speed = enemyIndexData.speed;
+        animator.SetFloat("AttackSpeed", enemyIndexData.attackSpeed);
+    }
+
     public void SubtractHealth(int damage)
     {
-        if (hp <= 0) return;
+        if (enemyIndexData.hp <= 0) return;
 
-        hp -= damage;
+        enemyIndexData.hp -= damage;
 
-        if (hp <= 0)
+        if (enemyIndexData.hp <= 0)
         {
+            navMeshAgent.enabled = false;
             animator.SetTrigger("Die");
             GetComponent<Collider>().enabled = false;
         }
@@ -42,7 +53,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (hp <= 0 || PlayerIndex.instance.hp <= 0) return;
+        if (enemyIndexData.hp <= 0 || LevelController.instance.gameState == GameState.Pause) return;
 
         Vector3 ePos = transform.position;
         Vector3 pPos = PlayerController.instance.transform.position;
@@ -56,8 +67,8 @@ public class Enemy : MonoBehaviour
         {
             RaycastHit hit;
 
-            Physics.Raycast(ePos, dir, out hit, LevelController.instance.enemyVision);
-
+            Physics.Raycast(ePos, dir, out hit, GameController.instance.enemyVision);
+            
             if (hit.collider != null && hit.collider.name.Contains("Player"))
             {
                 float dot = Vector3.Dot(transform.forward, dir);
@@ -77,9 +88,9 @@ public class Enemy : MonoBehaviour
 
             float distance = Vector3.Distance(ePos, pPos);
 
-            animator.SetBool("Run", distance > attackRange);
+            animator.SetBool("Run", distance > enemyIndexData.attackRange);
 
-            if (distance <= attackRange)
+            if (distance <= enemyIndexData.attackRange)
             {
                 isAttack = true;
 
@@ -105,10 +116,10 @@ public class Enemy : MonoBehaviour
         Vector3 pPos = PlayerController.instance.transform.position;
 
         float distance = Vector3.Distance(ePos, pPos);
-        
-        if (distance <= attackRange)
+
+        if (distance <= enemyIndexData.attackRange)
         {
-            PlayerIndex.instance.SubtractHealth(110);
+            PlayerIndex.instance.SubtractHealth(enemyIndexData.attack);
         }
     }
 
@@ -119,6 +130,6 @@ public class Enemy : MonoBehaviour
 
         Gizmos.color = Color.yellow;
 
-        Gizmos.DrawWireSphere(pos, attackRange);
+        Gizmos.DrawWireSphere(pos, enemyIndexData.attackRange);
     }
 }

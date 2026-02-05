@@ -1,4 +1,5 @@
 using UnityEngine;
+using static GameController;
 
 public class PlayerIndex : MonoBehaviour
 {
@@ -24,13 +25,15 @@ public class PlayerIndex : MonoBehaviour
 
         if (hp <= 0)
         {
+            LevelController.instance.gameState = GameState.Pause;
+
             animator.SetTrigger("Die");
             GetComponent<Collider>().enabled = false;
         }
-        /*else
+        else
         {
             animator.SetTrigger("Damage");
-        }*/
+        }
     }
 
     private void Update()

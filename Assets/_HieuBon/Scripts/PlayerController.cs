@@ -41,18 +41,18 @@ public class PlayerController : MonoBehaviour
     {
         int weaponIndex = (int)weaponType;
 
-        animator.SetInteger("WeaponIndex", weaponIndex);
-
         characterWeapon.WeaponSelect(weaponIndex, out radius);
     }
 
     void Update()
-    {      
-        return;
+    {
+        if (PlayerIndex.instance.hp <= 0 || LevelController.instance.gameState == GameState.Pause) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             isDrag = true;
 
+            animator.SetBool("ImmidiateExit", true);
             if (isAttack) animator.SetBool("Attack", false);
             isAttack = false;
         }
@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isAttack && amountEnemy == 0)
         {
+            animator.SetBool("ImmidiateExit", false);
             animator.SetBool("Attack", false);
             isAttack = false;
         }
