@@ -1,21 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.HID;
 using static GameController;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public EnemyType type;
-
-    NavMeshAgent navMeshAgent;
-
-    Animator animator;
+    [HideInInspector]
+    public NavMeshAgent navMeshAgent;
+    [HideInInspector]
+    public Animator animator;
+    [HideInInspector]
+    public EnemyIndexData enemyIndexData;
 
     bool isPlayerDetected;
     bool isAttack;
-
-    [HideInInspector]
-    public EnemyIndexData enemyIndexData;
 
     private void Awake()
     {
@@ -25,7 +23,7 @@ public class Enemy : MonoBehaviour
         navMeshAgent.acceleration = 15;
     }
 
-    private void Start()
+    public virtual void Start()
     {
         enemyIndexData = new EnemyIndexData(GameController.instance.GetEnemyIndexData(type));
 
@@ -119,13 +117,14 @@ public class Enemy : MonoBehaviour
 
         if (distance <= enemyIndexData.attackRange)
         {
-            PlayerIndex.instance.SubtractHealth(enemyIndexData.attack);
+            PlayerIndex.instance.SubtractHealth(1);
         }
     }
 
     private void OnDrawGizmos()
     {
         Vector3 pos = transform.position;
+
         pos.y = 1f;
 
         Gizmos.color = Color.yellow;

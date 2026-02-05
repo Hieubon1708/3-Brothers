@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static GameController;
 
@@ -13,11 +14,28 @@ public class EnemySet : MonoBehaviour
     public GameObject[] heads;
     public GameObject[] shields;
 
+    public AnimatorOverrideController[] animatorControllers;
+
     private void OnValidate()
     {
-        if (!isReset) return;
+        if (!isReset || Application.isPlaying) return;
 
         DeactiveAll();
+
+        Enemy enemy = GetComponent<Enemy>();
+
+        if (type == EnemyType.E4)
+        {
+            GetComponent<Animator>().runtimeAnimatorController = animatorControllers[1];
+            if (enemy == null) enemy = transform.AddComponent<Archer>();
+        }
+        else
+        {
+            GetComponent<Animator>().runtimeAnimatorController = animatorControllers[0];
+            if (enemy == null) enemy = transform.AddComponent<Infantitry>();
+        }
+
+        enemy.type = type;
 
         switch (type)
         {
@@ -31,7 +49,7 @@ public class EnemySet : MonoBehaviour
                 ActiveSet(2, 1, 0);
                 break;
             case EnemyType.E4:
-                ActiveSet(3, 2, 1);
+                ActiveSet(5, 2, 1, 0);
                 break;
             case EnemyType.E5:
                 ActiveSet(4, 1, 1);

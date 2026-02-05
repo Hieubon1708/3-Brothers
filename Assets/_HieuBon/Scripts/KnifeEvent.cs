@@ -1,21 +1,35 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class KnifeEvent : MonoBehaviour
 {
     public void Attack()
     {
-        Vector3 pos = transform.position;
-        pos.y = 1f;
+        if (!PlayerController.instance.isAttack) return;
 
-        int amountEnemy = Physics.OverlapSphereNonAlloc(pos, PlayerController.instance.radius, PlayerController.instance.colliders, PlayerController.instance.enemyLayer);
+        Transform e = PlayerController.instance.enemyTarget.transform;
 
-        if (amountEnemy > 0)
+        Enemy enemy = LevelController.instance.GetEnemy(e);
+
+        if (enemy != null)
         {
-            GameObject e = PlayerController.instance.colliders[0].gameObject;
+            if (enemy.enemyIndexData.hp <= 0) return;
 
-            Enemy enemy = LevelController.instance.GetEnemy(e);
+            int damage = 70;
 
-            if (enemy != null) enemy.SubtractHealth(70);
+            enemy.enemyIndexData.hp -= damage;
+
+            if (enemy.enemyIndexData.hp <= 0)
+            {
+                enemy.navMeshAgent.enabled = false;
+                enemy.animator.SetTrigger("Die");
+
+                DOVirtual.DelayedCall(0.15f, delegate
+                {
+                    PlayerController.instance.enemyTarget.enabled = false;
+                });
+            }
+            else enemy.animator.SetTrigger("Damage");
         }
     }
 }

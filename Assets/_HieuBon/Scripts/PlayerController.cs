@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask enemyLayer;
 
-    bool isAttack;
+    [HideInInspector]
+    public bool isAttack;
     bool isDrag;
 
     public float speed;
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public float radius;
 
     PlayerWeapon characterWeapon;
+    [HideInInspector]
+    public Collider enemyTarget;
 
     private void Awake()
     {
@@ -50,11 +53,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            isDrag = true;
-
             animator.SetBool("ImmidiateExit", true);
             if (isAttack) animator.SetBool("Attack", false);
+
             isAttack = false;
+            isDrag = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -62,6 +65,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 pos = transform.position;
+
         pos.y = 1f;
 
         int amountEnemy = Physics.OverlapSphereNonAlloc(pos, radius, colliders, enemyLayer);
@@ -69,24 +73,35 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = UIController.instance.uIInGame.uIJoystick.Dir;
 
         float speedPercent = UIController.instance.uIInGame.uIJoystick.SpeedPercent;
-        
+
         navMeshAgent.Move(dir * speed * speedPercent * PlayerIndex.instance.speed * Time.deltaTime);
-        
-        if (isAttack) transform.rotation = Quaternion.LookRotation(colliders[0].transform.position - transform.position);
+
+        if (isAttack)
+        {
+            if (enemyTarget == null || !enemyTarget.enabled) enemyTarget = colliders[0];
+
+            Vector3 d = enemyTarget.transform.position - transform.position;
+
+            Quaternion a = transform.rotation;
+            Quaternion b = Quaternion.LookRotation(d);
+
+            transform.rotation = Quaternion.Lerp(a, b, Time.deltaTime * 10f);
+
+            float angle = Quaternion.Angle(a, b);
+
+            if (angle <= 15 && !animator.GetBool("Attack")) animator.SetBool("Attack", true);
+        }
         else if (dir != Vector3.zero) transform.rotation = Quaternion.LookRotation(dir);
 
         animator.SetBool("Run", dir != Vector3.zero);
         animator.SetFloat("Speed", speedPercent * PlayerIndex.instance.speed);
 
-        if (!isDrag && amountEnemy > 0 && !isAttack)
-        {
-            animator.SetBool("Attack", true);
-            isAttack = true;
-        }
+        if (!isDrag && amountEnemy > 0 && !isAttack) isAttack = true;
         else if (isAttack && amountEnemy == 0)
         {
             animator.SetBool("ImmidiateExit", false);
             animator.SetBool("Attack", false);
+
             isAttack = false;
         }
     }
@@ -94,6 +109,7 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector3 pos = transform.position;
+
         pos.y = 1f;
 
         Gizmos.color = Color.yellow;

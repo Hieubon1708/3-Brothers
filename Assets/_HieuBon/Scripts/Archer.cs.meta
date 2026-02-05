@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e602da87c5c95a44a90105782fd0531e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - navMeshAgent: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - preArrow: {fileID: 7391186630109860592, guid: ecbb8424f89f0f94cace976866f7be03, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
