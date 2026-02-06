@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static GameController;
@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", speedPercent * PlayerIndex.instance.speed);
 
         if (!isDrag && amountEnemy > 0 && !isAttack) isAttack = true;
+
+        // trường hợp giết địch khi đứng yên, không điều khiển player
         else if (isAttack && amountEnemy == 0)
         {
             animator.SetBool("ImmidiateExit", false);

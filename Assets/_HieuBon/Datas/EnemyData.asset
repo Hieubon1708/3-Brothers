@@ -22,6 +22,6 @@ MonoBehaviour:
   - type: 3
     hp: 100
     attack: 40
-    attackRange: 7
+    attackRange: 10
     attackSpeed: 1
     speed: 7

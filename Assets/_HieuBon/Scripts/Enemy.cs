@@ -15,7 +15,7 @@ public abstract class Enemy : MonoBehaviour
     bool isPlayerDetected;
     bool isAttack;
 
-    private void Awake()
+    public virtual void Awake()
     {
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -26,7 +26,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Start()
     {
         enemyIndexData = new EnemyIndexData(GameController.instance.GetEnemyIndexData(type));
-
+        
         navMeshAgent.speed = enemyIndexData.speed;
         animator.SetFloat("AttackSpeed", enemyIndexData.attackSpeed);
     }
