@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
     public enum EquipMaterial
     {
-        M1, M2, M3, M4, M5, M6, M7, M8
+        M1, M2, M3, M4, M5, M6, M7
     }
 
     public enum WeaponType

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using static GameController;
 
-public class UIPanelEquipMerge : MonoBehaviour
+public class UIPanelEquip : MonoBehaviour
 {
     public Color lockColor;
     public Color[] colors;
@@ -23,19 +23,14 @@ public class UIPanelEquipMerge : MonoBehaviour
 
     Animation ani;
 
-    [HideInInspector]
-    public UIEquipBottom uIEquipSelect;
-
     public RectTransform rectPopup;
 
-    public void Show(UIEquipBottom uIEquipSelect)
+    public void Show(EquipData equipData)
     {
-        this.uIEquipSelect = uIEquipSelect;
-
         if (uIEquip == null) uIEquip = GetComponentInChildren<UIEquip>(true);
         if (ani == null) ani = GetComponent<Animation>();
 
-        LoadData(this.uIEquipSelect.uIEquip.equipData);
+        LoadData(equipData);
 
         gameObject.SetActive(true);
     }
@@ -87,7 +82,7 @@ public class UIPanelEquipMerge : MonoBehaviour
             totalSize += y;
         }
 
-        rectPopup.sizeDelta = new Vector2(rectPopup.sizeDelta.x, 600 + totalSize);
+        rectPopup.sizeDelta = new Vector2(rectPopup.sizeDelta.x, 490 + totalSize);
         border.sizeDelta = new Vector2(border.sizeDelta.x, totalSize);
     }
 }

@@ -15,13 +15,27 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt("Gold", 100);
+            return PlayerPrefs.GetInt("Gold");
         }
         set
         {
             PlayerPrefs.SetInt("Gold", value);
 
             //UIController.instance.uICurrency.UpdateGold();
+        }
+    }
+
+    public int Diamond
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("Diamond");
+        }
+        set
+        {
+            PlayerPrefs.SetInt("Diamond", value);
+
+            //UIController.instance.uICurrency.UpdateDiamond();
         }
     }
 

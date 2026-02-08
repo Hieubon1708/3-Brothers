@@ -42,7 +42,7 @@ public class UIEquipBottomController : MonoBehaviour
 
             EquipType rt = t[UnityEngine.Random.Range(1, t.Length)];
             EquipQuality rq = q[UnityEngine.Random.Range(0, q.Length)];
-            EquipMaterial rm = m[UnityEngine.Random.Range(0, rt == EquipType.Weapon ? m.Length - 1 : m.Length - 3)];
+            EquipMaterial rm = m[UnityEngine.Random.Range(0, rt == EquipType.Weapon ? m.Length : m.Length - 2)];
 
             //EquipData equipData = new EquipData(EquipType.Weapon, EquipQuality.Q1, EquipMaterial.M1);
             EquipData equipData = new EquipData(rt, rq, rm);
