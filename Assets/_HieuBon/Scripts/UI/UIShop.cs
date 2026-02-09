@@ -14,8 +14,6 @@ public class UIShop : MonoBehaviour
 
     public UIPanelEquip uIPanelEquip;
 
-    public GameObject shop;
-
     public enum PackType
     {
         Diamond, Gold
@@ -72,6 +70,11 @@ public class UIShop : MonoBehaviour
     public void Select(EquipData equipData)
     {
         uIPanelEquip.Show(equipData);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
 

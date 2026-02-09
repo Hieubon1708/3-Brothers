@@ -23,6 +23,17 @@ public class UIInventory : MonoBehaviour
         uIMaterial = GetComponentInChildren<UIMaterial>(true);
     }
 
+    public void Show(bool isAnimation = false)
+    {
+        inventory.SetActive(true);
+        if (isAnimation) inventoryAni.Play();
+    }
+
+    public void Hide()
+    {
+        inventory.SetActive(false);
+    }
+
     public void Select(UIEquipBottom uIEquipSelect)
     {
         uIEquipInfo.Show(uIEquipSelect);
@@ -31,5 +42,12 @@ public class UIInventory : MonoBehaviour
     public void EquipedSelect(UIEquipTop uIEquipedSelect)
     {
         uIEquipedInfo.Show(uIEquipedSelect);
+    }
+
+    public bool IsSame(EquipData equipData1, EquipData equipData2)
+    {
+        return equipData1.equipType == equipData2.equipType
+                && equipData1.equipQuality == equipData2.equipQuality
+                && equipData1.equipMaterial == equipData2.equipMaterial;
     }
 }

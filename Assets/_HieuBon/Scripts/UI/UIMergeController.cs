@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIMergeController : MonoBehaviour
@@ -94,24 +92,6 @@ public class UIMergeController : MonoBehaviour
         return selectCount;
     }
 
-    public bool CanMerge()
-    {
-        List<EquipData> equipDatas = new List<EquipData>(GameManager.instance.Equipments);
-        mergeEquips = new List<EquipData>();
-
-        for (int i = 0; i < equipDatas.Count;)
-        {
-            List<EquipData> checkCount = new List<EquipData>() { equipDatas[i] };
-
-            for (int j = i + 1; j < equipDatas.Count; j++)
-            {
-                if (IsSame(equipDatas[i], equipDatas[j])) checkCount.Add(equipDatas[j]);
-            }
-            if (checkCount.Count >= 3) return true;
-        }
-        return false;
-    }
-
     public void LoadData()
     {
         List<EquipData> equipDatas = new List<EquipData>(UIEquipBottomController.instance.equipDatas);
@@ -123,7 +103,7 @@ public class UIMergeController : MonoBehaviour
 
             for (int j = i + 1; j < equipDatas.Count; j++)
             {
-                if (IsSame(equipDatas[i], equipDatas[j])) checkCount.Add(equipDatas[j]);
+                if (UIInventory.instance.IsSame(equipDatas[i], equipDatas[j])) checkCount.Add(equipDatas[j]);
             }
 
             if (checkCount.Count >= 3) mergeEquips.Add(equipDatas[i]);
@@ -182,7 +162,7 @@ public class UIMergeController : MonoBehaviour
         {
             for (int i = 0; i < equipDatas.Count; i++)
             {
-                if (IsSame(mergeEquips[k], equipDatas[i]))
+                if (UIInventory.instance.IsSame(mergeEquips[k], equipDatas[i]))
                 {
                     EquipData equipData = equipDatas[i];
                     equipDatas.RemoveAt(i);
@@ -212,12 +192,5 @@ public class UIMergeController : MonoBehaviour
         {
             equips[i].mergeNotice.SetActive(mergeEquips.Contains(equipDatas[i]));
         }
-    }
-
-    public bool IsSame(EquipData equipData1, EquipData equipData2)
-    {
-        return equipData1.equipType == equipData2.equipType
-                && equipData1.equipQuality == equipData2.equipQuality
-                && equipData1.equipMaterial == equipData2.equipMaterial;
     }
 }

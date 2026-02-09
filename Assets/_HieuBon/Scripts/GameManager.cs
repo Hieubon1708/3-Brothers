@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt("IronAmount", 100);
+            return PlayerPrefs.GetInt("IronAmount");
         }
         set
         {

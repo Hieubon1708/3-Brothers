@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +15,6 @@ public class UIChestController : MonoBehaviour
     ScrollRect[] scrollRects;
 
     UIChestButton[] uIChestButtons;
-
-    [HideInInspector]
-    public bool isFree;
-    [HideInInspector]
-    public bool haveKey;
 
     public enum ChestType
     {
@@ -51,28 +45,6 @@ public class UIChestController : MonoBehaviour
         {
             scrollRects[i] = boards[i].GetComponent<ScrollRect>();
         }
-
-        for (int i = 0; i < uIChestButtons.Length; i++)
-        {
-            uIChestButtons[i].LoadData();
-        }
-    }
-
-    private void Update()
-    {
-        bool isFree = false;
-        bool haveKey = false;
-
-        for (int i = 0; i < uIChestButtons.Length; i++)
-        {
-            TimeSpan timeRemaining = uIChestButtons[i].FreeTime - DateTime.Now;
-
-            if (timeRemaining.TotalSeconds <= 0) isFree = true;
-            if (uIChestButtons[i].ChestKey > 0) haveKey = true;
-        }
-
-        this.isFree = isFree;
-        this.haveKey = haveKey;
     }
 
     public void Roll(ChestType type, int amount)

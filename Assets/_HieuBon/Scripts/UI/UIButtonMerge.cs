@@ -35,7 +35,7 @@ public class UIButtonMerge : MonoBehaviour
 
         for (int i = 0; i < equipDatas.Count; i++)
         {
-            if (UIMergeController.instance.IsSame(equipData, equipDatas[i]))
+            if (UIInventory.instance.IsSame(equipData, equipDatas[i]))
             {
                 equipDatas.RemoveAt(i);
                 i--;

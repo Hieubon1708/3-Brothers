@@ -45,15 +45,6 @@ public class UIEquipeTopController : MonoBehaviour
         }
     }
 
-    public bool IsUpgrade()
-    {
-        for (int i = 0; i < uIEquipeds.Length; i++)
-        {
-            if (uIEquipeds[i].IsUpgrade()) return true;
-        }
-        return false;
-    }
-
     public bool IsPriority(EquipData equipData)
     {
         for (int i = 0; i < uIEquipeds.Length; i++)
