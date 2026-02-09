@@ -94,6 +94,24 @@ public class UIMergeController : MonoBehaviour
         return selectCount;
     }
 
+    public bool CanMerge()
+    {
+        List<EquipData> equipDatas = new List<EquipData>(GameManager.instance.Equipments);
+        mergeEquips = new List<EquipData>();
+
+        for (int i = 0; i < equipDatas.Count;)
+        {
+            List<EquipData> checkCount = new List<EquipData>() { equipDatas[i] };
+
+            for (int j = i + 1; j < equipDatas.Count; j++)
+            {
+                if (IsSame(equipDatas[i], equipDatas[j])) checkCount.Add(equipDatas[j]);
+            }
+            if (checkCount.Count >= 3) return true;
+        }
+        return false;
+    }
+
     public void LoadData()
     {
         List<EquipData> equipDatas = new List<EquipData>(UIEquipBottomController.instance.equipDatas);
@@ -188,6 +206,11 @@ public class UIMergeController : MonoBehaviour
         for (int i = equipDatas.Count; i < equips.Count; i++)
         {
             equips[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < equips.Count; i++)
+        {
+            equips[i].mergeNotice.SetActive(mergeEquips.Contains(equipDatas[i]));
         }
     }
 

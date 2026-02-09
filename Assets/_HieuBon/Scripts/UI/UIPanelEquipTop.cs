@@ -109,17 +109,17 @@ public class UIPanelEquipTop : MonoBehaviour
 
     void UpdateIndex(EquipData equipData)
     {
-        int level = GetLevel(equipData);
+        int level = DataController.instance.GetEquipLevel(equipData);
 
-        int value = GetValue(level, equipData.equipType);
+        int value = DataController.instance.GetEquipValue(level, equipData.equipType);
 
         textValue.text = value.ToString();
 
         int gold = GameManager.instance.Gold;
-        int goldUpgrade = GetGoldUpgrade();
+        int goldUpgrade = DataController.instance.GetGoldEquipUpgrade();
 
         int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
-        int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+        int amountUpgradeMaterial = DataController.instance.GetMaterialEquipUpgrade(equipData.equipType);
 
         string textGold = "<color=" + (gold < goldUpgrade ? "red" : "white") + ">" + gold + "</color>/" + goldUpgrade;
         string textMaterial = "<color=" + (amountMaterial < amountUpgradeMaterial ? "red" : "white") + ">" + amountMaterial + "</color>/" + amountUpgradeMaterial;
@@ -143,12 +143,12 @@ public class UIPanelEquipTop : MonoBehaviour
         EquipData equipData = uIEquipedSelect.equipData;
 
         int gold = GameManager.instance.Gold;
-        int goldUpgrade = GetGoldUpgrade();
+        int goldUpgrade = DataController.instance.GetGoldEquipUpgrade();
 
         int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
-        int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+        int amountUpgradeMaterial = DataController.instance.GetMaterialEquipUpgrade(equipData.equipType);
 
-        if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || GetLevel(equipData) == 1000) return;
+        if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || DataController.instance.GetEquipLevel(equipData) == 1000) return;
 
         GameManager.instance.Gold -= goldUpgrade;
 
@@ -173,12 +173,12 @@ public class UIPanelEquipTop : MonoBehaviour
         while (true)
         {
             int gold = GameManager.instance.Gold;
-            int goldUpgrade = GetGoldUpgrade();
+            int goldUpgrade = DataController.instance.GetGoldEquipUpgrade();
 
             int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
-            int amountUpgradeMaterial = GetAmountMaterialUpgrade(equipData.equipType);
+            int amountUpgradeMaterial = DataController.instance.GetMaterialEquipUpgrade(equipData.equipType);
 
-            if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || GetLevel(equipData) == 1000) break;
+            if (gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || DataController.instance.GetEquipLevel(equipData) == 1000) break;
 
             GameManager.instance.Gold -= goldUpgrade;
 
@@ -207,36 +207,5 @@ public class UIPanelEquipTop : MonoBehaviour
         uIEquipedSelect.Deactive();
 
         Hide();
-    }
-
-    int GetGoldUpgrade()
-    {
-        return 10;
-    }
-
-    int GetAmountMaterialUpgrade(EquipType equipType)
-    {
-        if (equipType == EquipType.Weapon) return 10;
-        else return 10;
-    }
-
-    int GetLevel(EquipData equipData)
-    {
-        int level = 1;
-
-        switch (equipData.equipType)
-        {
-            case EquipType.Weapon: level = GameManager.instance.WeaponLevel; break;
-            case EquipType.Hat: level = GameManager.instance.HatLevel; break;
-            case EquipType.Armor: level = GameManager.instance.ArmorLevel; break;
-            case EquipType.Shoes: level = GameManager.instance.ShoesLevel; break;
-        }
-
-        return level;
-    }
-
-    int GetValue(int level, EquipType equipType)
-    {
-        return 999;
     }
 }

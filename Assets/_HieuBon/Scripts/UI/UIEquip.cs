@@ -15,8 +15,15 @@ public class UIEquip : MonoBehaviour
 
     public EquipData equipData;
 
+    public GameObject upgradeNotice;
+    public GameObject mergeNotice;
+    public GameObject priorityNotice;
+    public GameObject newNotice;
+
     public void LoadEquip(EquipData equipData)
     {
+        if (newNotice != null) newNotice.SetActive(equipData.isNew);
+
         this.equipData = equipData;
 
         int iconIndex = (int)equipData.equipMaterial;

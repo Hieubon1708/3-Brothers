@@ -14,6 +14,8 @@ public class UIShop : MonoBehaviour
 
     public UIPanelEquip uIPanelEquip;
 
+    public GameObject shop;
+
     public enum PackType
     {
         Diamond, Gold
@@ -23,8 +25,8 @@ public class UIShop : MonoBehaviour
     {
         instance = this;
 
-        UIShopPack[] packs = GetComponentsInChildren<UIShopPack>();
-        UIShopSetPack[] setPacks = GetComponentsInChildren<UIShopSetPack>();
+        UIShopPack[] packs = GetComponentsInChildren<UIShopPack>(true);
+        UIShopSetPack[] setPacks = GetComponentsInChildren<UIShopSetPack>(true);
 
         int d = 0;
         int g = 0;

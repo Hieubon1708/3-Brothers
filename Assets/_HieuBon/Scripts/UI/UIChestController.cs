@@ -17,6 +17,11 @@ public class UIChestController : MonoBehaviour
 
     UIChestButton[] uIChestButtons;
 
+    [HideInInspector]
+    public bool isFree;
+    [HideInInspector]
+    public bool haveKey;
+
     public enum ChestType
     {
         Silver, Epic
@@ -46,6 +51,28 @@ public class UIChestController : MonoBehaviour
         {
             scrollRects[i] = boards[i].GetComponent<ScrollRect>();
         }
+
+        for (int i = 0; i < uIChestButtons.Length; i++)
+        {
+            uIChestButtons[i].LoadData();
+        }
+    }
+
+    private void Update()
+    {
+        bool isFree = false;
+        bool haveKey = false;
+
+        for (int i = 0; i < uIChestButtons.Length; i++)
+        {
+            TimeSpan timeRemaining = uIChestButtons[i].FreeTime - DateTime.Now;
+
+            if (timeRemaining.TotalSeconds <= 0) isFree = true;
+            if (uIChestButtons[i].ChestKey > 0) haveKey = true;
+        }
+
+        this.isFree = isFree;
+        this.haveKey = haveKey;
     }
 
     public void Roll(ChestType type, int amount)
@@ -109,7 +136,23 @@ public class UIChestController : MonoBehaviour
         panelDropRate.SetActive(false);
     }
 
+    public bool HaveKey()
+    {
+        for (int i = 0; i < uIChestButtons.Length; i++)
+        {
+            if (uIChestButtons[i].ChestKey > 0) return true;
+        }
+        return false;
+    }
 
+    public bool IsFree()
+    {
+        for (int i = 0; i < uIChestButtons.Length; i++)
+        {
+            if (uIChestButtons[i].freeButton.activeSelf) return true;
+        }
+        return false;
+    }
 }
 
 

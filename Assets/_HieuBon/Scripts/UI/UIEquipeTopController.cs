@@ -36,4 +36,30 @@ public class UIEquipeTopController : MonoBehaviour
     {
         UIEquip uIEquip = uIEquipSelect.uIEquip;
     }
+
+    public void CheckUpgradeNotice(EquipData equipData)
+    {
+        for (int i = 0; i < uIEquipeds.Length; i++)
+        {
+            uIEquipeds[i].CheckUpgradeNotice();
+        }
+    }
+
+    public bool IsUpgrade()
+    {
+        for (int i = 0; i < uIEquipeds.Length; i++)
+        {
+            if (uIEquipeds[i].IsUpgrade()) return true;
+        }
+        return false;
+    }
+
+    public bool IsPriority(EquipData equipData)
+    {
+        for (int i = 0; i < uIEquipeds.Length; i++)
+        {
+            if (uIEquipeds[i].equipData.equipType == equipData.equipType) return uIEquipeds[i].IsPriority(equipData);
+        }
+        return true;
+    }
 }

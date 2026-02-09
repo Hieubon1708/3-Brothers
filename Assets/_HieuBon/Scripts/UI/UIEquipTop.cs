@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static GameController;
 
 public class UIEquipTop : MonoBehaviour
 {
@@ -42,5 +43,30 @@ public class UIEquipTop : MonoBehaviour
     public void UpdateLevel(int level)
     {
         textLevel.text = "Lv." + level;
+    }
+
+    public void CheckUpgradeNotice()
+    {
+        uIEquip.upgradeNotice.SetActive(IsUpgrade());
+    }
+
+    public bool IsUpgrade()
+    {
+        if (equipData == null) return false;
+
+        int gold = GameManager.instance.Gold;
+        int goldUpgrade = DataController.instance.GetGoldEquipUpgrade();
+
+        int amountMaterial = equipData.equipType == EquipType.Weapon ? GameManager.instance.IronAmount : amountMaterial = GameManager.instance.ClothAmount;
+        int amountUpgradeMaterial = DataController.instance.GetMaterialEquipUpgrade(equipData.equipType);
+
+        return !(gold < goldUpgrade || amountMaterial < amountUpgradeMaterial || DataController.instance.GetEquipLevel(equipData) == 1000);
+    }
+
+    public bool IsPriority(EquipData equipData)
+    {
+        if (emptySlot.activeSelf) return true;
+
+        return equipData.equipQuality > this.equipData.equipQuality;
     }
 }

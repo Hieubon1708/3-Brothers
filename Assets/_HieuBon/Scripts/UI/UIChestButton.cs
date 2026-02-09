@@ -16,8 +16,6 @@ public class UIChestButton : MonoBehaviour
 
     public int price;
 
-    DateTime nextTime;
-
     public DateTime FreeTime
     {
         get
@@ -43,17 +41,15 @@ public class UIChestButton : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public void LoadData()
     {
         keyKey = type + "key";
         timeKey = type + "time";
-
-        nextTime = FreeTime;
     }
 
     private void Update()
     {
-        TimeSpan timeRemaining = nextTime - DateTime.Now;
+        TimeSpan timeRemaining = FreeTime - DateTime.Now;
 
         freeButton.SetActive(timeRemaining.TotalSeconds <= 0);
         textTime.gameObject.SetActive(timeRemaining.TotalSeconds > 0);
@@ -73,8 +69,6 @@ public class UIChestButton : MonoBehaviour
         if (freeButton.activeSelf)
         {
             FreeTime = type == UIChestController.ChestType.Silver ? DateTime.Now.AddHours(3) : DateTime.Today.AddDays(1);
-            
-            nextTime = FreeTime;
 
             UIChestController.instance.Roll(type, 1);
         }

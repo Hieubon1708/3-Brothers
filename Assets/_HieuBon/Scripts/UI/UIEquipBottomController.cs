@@ -83,10 +83,24 @@ public class UIEquipBottomController : MonoBehaviour
                 }
 
                 equips[count].LoadEquip(equipDatas[i]);
+                equips[count].priorityNotice.SetActive(UIEquipeTopController.instance.IsPriority(equipDatas[i]));
 
                 count++;
             }
         }
+
+        bool isNew = false;
+
+        for (int i = 0; i < equipDatas.Count; i++)
+        {
+            if (equipDatas[i].isNew)
+            {
+                isNew = true;
+                equipDatas[i].isNew = false;
+            }
+        }
+
+        if (isNew) SaveEquips();
 
         for (int i = count; i < equips.Count; i++)
         {
@@ -158,6 +172,7 @@ public class UIEquipBottomController : MonoBehaviour
 public class EquipData
 {
     public bool isEquip;
+    public bool isNew = true;
     public EquipType equipType;
     public EquipQuality equipQuality;
     public EquipMaterial equipMaterial;

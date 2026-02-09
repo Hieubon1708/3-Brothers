@@ -11,6 +11,9 @@ public class UIInventory : MonoBehaviour
     [HideInInspector]
     public UIMaterial uIMaterial;
 
+    public GameObject inventory;
+    public Animation inventoryAni;
+
     private void Awake()
     {
         instance = this;
