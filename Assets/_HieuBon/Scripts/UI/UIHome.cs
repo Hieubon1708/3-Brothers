@@ -91,7 +91,7 @@ public class UIHome : MonoBehaviour
     {
         List<EquipData> equipDatas = GameManager.instance.Equipments;
 
-        for (int i = 0; i < equipDatas.Count;)
+        for (int i = 0; i < equipDatas.Count; i++)
         {
             List<EquipData> checkCount = new List<EquipData>() { equipDatas[i] };
 
